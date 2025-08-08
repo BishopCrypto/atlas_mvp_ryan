@@ -35,6 +35,7 @@ const AddPersonModal: React.FC<AddPersonModalProps> = ({
     nationality: '',
     notes: ''
   });
+  const [runScreening, setRunScreening] = useState(true); // Default to run screening
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!isOpen) return null;
@@ -100,7 +101,8 @@ const AddPersonModal: React.FC<AddPersonModalProps> = ({
         identification_number: formData.identification_number.trim() || undefined,
         date_of_birth: formData.date_of_birth || undefined,
         nationality: formData.nationality.trim() || undefined,
-        notes: formData.notes.trim() || undefined
+        notes: formData.notes.trim() || undefined,
+        runScreening: runScreening
       });
 
       // Reset form
@@ -243,6 +245,25 @@ const AddPersonModal: React.FC<AddPersonModalProps> = ({
               rows={3}
               placeholder="Additional notes or comments"
             />
+          </div>
+
+          {/* Screening Options */}
+          <div className="border-t border-gray-200 pt-4">
+            <div className="flex items-center space-x-3">
+              <input
+                type="checkbox"
+                id="runScreening"
+                checked={runScreening}
+                onChange={(e) => setRunScreening(e.target.checked)}
+                className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+              />
+              <label htmlFor="runScreening" className="text-sm text-gray-700">
+                <span className="font-medium">Run screening now</span>
+                <span className="block text-xs text-gray-500 mt-1">
+                  Automatically check this person against Atlas security databases
+                </span>
+              </label>
+            </div>
           </div>
 
           {/* Actions */}

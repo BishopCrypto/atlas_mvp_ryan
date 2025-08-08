@@ -148,21 +148,43 @@ const AtlasGlobalInsightsDashboard = () => {
         return;
       }
 
-      // Then get all lists for these containers
+      // Then get all lists for these containers with actual member counts
       const containerIds = containersData?.map(c => c.id) || [];
       let listsData: any[] = [];
       
       if (containerIds.length > 0) {
         const { data: lists, error: listsError } = await supabase
           .from('lists')
-          .select('*')
+          .select(`
+            *,
+            list_members!inner(count)
+          `)
           .in('container_id', containerIds)
           .order('created_at', { ascending: false });
 
         if (listsError) {
           console.error('Error fetching lists:', listsError);
+          // Fallback: get lists without member counts
+          const { data: fallbackLists } = await supabase
+            .from('lists')
+            .select('*')
+            .in('container_id', containerIds)
+            .order('created_at', { ascending: false });
+          
+          listsData = fallbackLists || [];
         } else {
           listsData = lists || [];
+        }
+
+        // Get actual member counts for each list
+        for (const list of listsData) {
+          const { data: memberCount } = await supabase
+            .from('list_members')
+            .select('id', { count: 'exact', head: true })
+            .eq('list_id', list.id)
+            .eq('is_active', true);
+          
+          list.actualCount = memberCount || 0;
         }
       }
 
@@ -178,7 +200,7 @@ const AtlasGlobalInsightsDashboard = () => {
             container_id: list.container_id,
             type: list.type,
             name: list.name,
-            count: list.count,
+            count: list.actualCount || list.count || 0,
             status: list.status,
             dueDate: list.due_date,
             flagged: list.flagged

@@ -3,6 +3,7 @@ import { AlertTriangle, Clock, Users, ExternalLink, Plus, Shield, CheckCircle } 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { supabase } from '@/lib/supabase';
 import AddPersonModal from './AddPersonModal';
+import { ScreeningService } from '@/lib/screening';
 
 interface Container {
   id: number;
@@ -92,13 +93,22 @@ const ContainerDetails: React.FC<ContainerDetailsProps> = ({
         throw new Error('No tenant selected. Please refresh and select a tenant.');
       }
 
+      // Extract screening flag and clean person data
+      const { runScreening, ...cleanPersonData } = personData;
+      
+      // Initial screening status
+      let initialStatus = 'pending';
+      if (!runScreening) {
+        initialStatus = 'not_screened';
+      }
+
       const { data, error } = await supabase
         .from('list_members')
         .insert({
           list_id: selectedContainer.id,
           tenant_id: tenantId,
-          ...personData,
-          screening_status: 'pending'
+          ...cleanPersonData,
+          screening_status: initialStatus
         })
         .select()
         .single();
@@ -109,6 +119,46 @@ const ContainerDetails: React.FC<ContainerDetailsProps> = ({
       }
 
       console.log('✅ Person added successfully:', data);
+
+      // Run screening if requested
+      if (runScreening && data) {
+        console.log('🔍 Running automatic screening...');
+        try {
+          const screeningResult = await ScreeningService.screenPerson(
+            data.id,
+            tenantId,
+            {
+              name: cleanPersonData.name,
+              email: cleanPersonData.email,
+              phone: cleanPersonData.phone,
+              dateOfBirth: cleanPersonData.date_of_birth,
+              nationality: cleanPersonData.nationality
+            }
+          );
+
+          // Update person with screening results
+          const statusSummary = ScreeningService.getStatusSummary(screeningResult);
+          
+          await supabase
+            .from('list_members')
+            .update({
+              screening_status: statusSummary.status,
+              screening_score: Math.round(screeningResult.highestConfidence * 100),
+              screening_details: {
+                matchCount: screeningResult.matchCount,
+                riskLevel: screeningResult.riskLevel,
+                summary: statusSummary.summary,
+                screenedAt: screeningResult.cachedAt
+              }
+            })
+            .eq('id', data.id);
+
+          console.log('✅ Screening completed:', statusSummary.summary);
+        } catch (screeningError) {
+          console.error('❌ Screening failed:', screeningError);
+          // Don't fail the whole operation if screening fails
+        }
+      }
       
       // Refresh members and parent data
       await fetchMembers();
@@ -124,7 +174,9 @@ const ContainerDetails: React.FC<ContainerDetailsProps> = ({
     'in-progress': <Clock className="h-4 w-4 text-orange-500" />,
     clear: <CheckCircle className="h-4 w-4 text-green-500" />,
     flagged: <AlertTriangle className="h-4 w-4 text-red-500" />,
-    rejected: <AlertTriangle className="h-4 w-4 text-red-600" />
+    rejected: <AlertTriangle className="h-4 w-4 text-red-600" />,
+    attention: <AlertTriangle className="h-4 w-4 text-orange-500" />,
+    not_screened: <Users className="h-4 w-4 text-gray-400" />
   };
 
   return (
@@ -262,10 +314,12 @@ const ContainerDetails: React.FC<ContainerDetailsProps> = ({
                     <span className={`px-2 py-1 text-xs font-medium rounded-full capitalize
                       ${member.screening_status === 'clear' ? 'bg-green-100 text-green-800' :
                         member.screening_status === 'flagged' ? 'bg-red-100 text-red-800' :
+                        member.screening_status === 'attention' ? 'bg-orange-100 text-orange-800' :
+                        member.screening_status === 'not_screened' ? 'bg-gray-100 text-gray-600' :
                         member.screening_status === 'in-progress' ? 'bg-orange-100 text-orange-800' :
                         'bg-blue-100 text-blue-800'}
                     `}>
-                      {member.screening_status}
+                      {member.screening_status === 'not_screened' ? 'not screened' : member.screening_status}
                     </span>
                     <button className="text-indigo-600 hover:text-indigo-700">
                       <Shield className="h-4 w-4" />
