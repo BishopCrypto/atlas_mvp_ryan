@@ -1,0 +1,336 @@
+
+> atlas-intelligence@0.1.0 dev
+> next dev
+
+   ▲ Next.js 14.0.4
+   - Local:        http://localhost:3000
+   - Environments: .env.local
+
+ ✓ Ready in 1397ms
+ ○ Compiling /api-test ...
+ ✓ Compiled /api-test in 710ms (426 modules)
+ ✓ Compiled in 89ms (221 modules)
+ ✓ Compiled /not-found in 47ms (417 modules)
+ ✓ Compiled /api/atlas-proxy/login in 52ms (230 modules)
+🔐 Proxying login request to Atlas API...
+✅ Atlas API login successful
+ ✓ Compiled /api/atlas-proxy/risk-check in 27ms (232 modules)
+🔍 Proxying risk check request to Atlas API...
+✅ Atlas API risk check successful
+ ✓ Compiled in 150ms (221 modules)
+ ✓ Compiled in 63ms (221 modules)
+ ✓ Compiled in 67ms (221 modules)
+ ✓ Compiled in 62ms (221 modules)
+ ✓ Compiled in 107ms (221 modules)
+ ✓ Compiled in 59ms (221 modules)
+ ✓ Compiled in 52ms (221 modules)
+ ✓ Compiled in 56ms (221 modules)
+ ✓ Compiled in 61ms (221 modules)
+ ✓ Compiled in 106ms (221 modules)
+ ✓ Compiled / in 285ms (662 modules)
+ ✓ Compiled in 170ms (676 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 121ms (676 modules)
+ ⨯ app/page.tsx (171:4) @ getFilteredContainers
+ ⨯ ReferenceError: activeContainerType is not defined
+    at getFilteredContainers (./app/page.tsx:283:9)
+    at AtlasGlobalInsightsDashboard (./app/page.tsx:289:32)
+[0m [90m 169 |[39m     [36mconst[39m departmentContainers [33m=[39m containers[33m.[39mfilter(container [33m=>[39m container[33m.[39mdepartment [33m===[39m userRole)[33m;[39m[0m
+[0m [90m 170 |[39m     [0m
+[0m[31m[1m>[22m[39m[90m 171 |[39m     [36mif[39m (activeContainerType [33m===[39m [32m'all'[39m) {[0m
+[0m [90m     |[39m    [31m[1m^[22m[39m[0m
+[0m [90m 172 |[39m       [36mreturn[39m departmentContainers[33m;[39m[0m
+[0m [90m 173 |[39m     } [36melse[39m {[0m
+[0m [90m 174 |[39m       [36mreturn[39m departmentContainers[33m.[39mfilter(container [33m=>[39m container[33m.[39mtype [33m===[39m activeContainerType)[33m;[39m[0m
+ ✓ Compiled in 96ms (676 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⨯ app/page.tsx (172:4) @ getFilteredContainers
+ ⨯ ReferenceError: activeContainerType is not defined
+    at getFilteredContainers (./app/page.tsx:284:9)
+    at AtlasGlobalInsightsDashboard (./app/page.tsx:290:32)
+[0m [90m 170 |[39m     [36mconst[39m departmentContainers [33m=[39m containers[33m.[39mfilter(container [33m=>[39m container[33m.[39mdepartment [33m===[39m userRole)[33m;[39m[0m
+[0m [90m 171 |[39m     [0m
+[0m[31m[1m>[22m[39m[90m 172 |[39m     [36mif[39m (activeContainerType [33m===[39m [32m'all'[39m) {[0m
+[0m [90m     |[39m    [31m[1m^[22m[39m[0m
+[0m [90m 173 |[39m       [36mreturn[39m departmentContainers[33m;[39m[0m
+[0m [90m 174 |[39m     } [36melse[39m {[0m
+[0m [90m 175 |[39m       [36mreturn[39m departmentContainers[33m.[39mfilter(container [33m=>[39m container[33m.[39mtype [33m===[39m activeContainerType)[33m;[39m[0m
+ ✓ Compiled in 91ms (676 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⨯ app/page.tsx (266:29) @ activeContainerType
+ ⨯ ReferenceError: activeContainerType is not defined
+    at AtlasGlobalInsightsDashboard (./app/page.tsx:434:38)
+[0m [90m 264 |[39m         quickScreenMode[33m=[39m{quickScreenMode}[0m
+[0m [90m 265 |[39m         toggleQuickScreen[33m=[39m{toggleQuickScreen}[0m
+[0m[31m[1m>[22m[39m[90m 266 |[39m         activeContainerType[33m=[39m{activeContainerType}[0m
+[0m [90m     |[39m                             [31m[1m^[22m[39m[0m
+[0m [90m 267 |[39m         typeLabels[33m=[39m{typeLabels}[0m
+[0m [90m 268 |[39m         selectedTenant[33m=[39m{selectedTenant}[0m
+[0m [90m 269 |[39m         tenantData[33m=[39m{tenantData}[0m
+ ✓ Compiled in 95ms (676 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⨯ app/page.tsx (266:29) @ activeContainerType
+ ⨯ ReferenceError: activeContainerType is not defined
+    at AtlasGlobalInsightsDashboard (./app/page.tsx:434:38)
+[0m [90m 264 |[39m         quickScreenMode[33m=[39m{quickScreenMode}[0m
+[0m [90m 265 |[39m         toggleQuickScreen[33m=[39m{toggleQuickScreen}[0m
+[0m[31m[1m>[22m[39m[90m 266 |[39m         activeContainerType[33m=[39m{activeContainerType}[0m
+[0m [90m     |[39m                             [31m[1m^[22m[39m[0m
+[0m [90m 267 |[39m         typeLabels[33m=[39m{typeLabels}[0m
+[0m [90m 268 |[39m         selectedTenant[33m=[39m{selectedTenant}[0m
+[0m [90m 269 |[39m         tenantData[33m=[39m{tenantData}[0m
+ ✓ Compiled in 113ms (676 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⨯ app/page.tsx (266:29) @ activeContainerType
+ ⨯ ReferenceError: activeContainerType is not defined
+    at AtlasGlobalInsightsDashboard (./app/page.tsx:434:38)
+[0m [90m 264 |[39m         quickScreenMode[33m=[39m{quickScreenMode}[0m
+[0m [90m 265 |[39m         toggleQuickScreen[33m=[39m{toggleQuickScreen}[0m
+[0m[31m[1m>[22m[39m[90m 266 |[39m         activeContainerType[33m=[39m{activeContainerType}[0m
+[0m [90m     |[39m                             [31m[1m^[22m[39m[0m
+[0m [90m 267 |[39m         typeLabels[33m=[39m{typeLabels}[0m
+[0m [90m 268 |[39m         selectedTenant[33m=[39m{selectedTenant}[0m
+[0m [90m 269 |[39m         tenantData[33m=[39m{tenantData}[0m
+ ✓ Compiled in 89ms (676 modules)
+ ⨯ app/page.tsx (267:29) @ activeContainerType
+ ⨯ ReferenceError: activeContainerType is not defined
+    at AtlasGlobalInsightsDashboard (./app/page.tsx:435:38)
+[0m [90m 265 |[39m         quickScreenMode[33m=[39m{quickScreenMode}[0m
+[0m [90m 266 |[39m         toggleQuickScreen[33m=[39m{toggleQuickScreen}[0m
+[0m[31m[1m>[22m[39m[90m 267 |[39m         activeContainerType[33m=[39m{activeContainerType}[0m
+[0m [90m     |[39m                             [31m[1m^[22m[39m[0m
+[0m [90m 268 |[39m         typeLabels[33m=[39m{typeLabels}[0m
+[0m [90m 269 |[39m         selectedTenant[33m=[39m{selectedTenant}[0m
+[0m [90m 270 |[39m         tenantData[33m=[39m{tenantData}[0m
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 84ms (676 modules)
+ ⨯ app/page.tsx (279:35) @ activeContainerType
+ ⨯ ReferenceError: activeContainerType is not defined
+    at AtlasGlobalInsightsDashboard (./app/page.tsx:451:50)
+[0m [90m 277 |[39m           [33m<[39m[33m>[39m[0m
+[0m [90m 278 |[39m             [33m<[39m[33mSidebar[39m[0m
+[0m[31m[1m>[22m[39m[90m 279 |[39m               activeContainerType[33m=[39m{activeContainerType}[0m
+[0m [90m     |[39m                                   [31m[1m^[22m[39m[0m
+[0m [90m 280 |[39m               setActiveContainerType[33m=[39m{setActiveContainerType}[0m
+[0m [90m 281 |[39m               getAvailableContainerTypes[33m=[39m{getAvailableContainerTypes}[0m
+[0m [90m 282 |[39m               filteredContainers[33m=[39m{filteredContainers}[0m
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 84ms (676 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⨯ app/page.tsx (316:29) @ activeContainerType
+ ⨯ ReferenceError: activeContainerType is not defined
+    at AtlasGlobalInsightsDashboard (./app/page.tsx:506:38)
+[0m [90m 314 |[39m         onAddContainer[33m=[39m{handleAddContainer}[0m
+[0m [90m 315 |[39m         userRole[33m=[39m{userRole}[0m
+[0m[31m[1m>[22m[39m[90m 316 |[39m         activeContainerType[33m=[39m{activeContainerType}[0m
+[0m [90m     |[39m                             [31m[1m^[22m[39m[0m
+[0m [90m 317 |[39m       [33m/[39m[33m>[39m[0m
+[0m [90m 318 |[39m     [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m[0m
+[0m [90m 319 |[39m   )[33m;[39m[0m
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 86ms (676 modules)
+ ⨯ app/page.tsx (316:29) @ activeContainerType
+ ⨯ ReferenceError: activeContainerType is not defined
+    at AtlasGlobalInsightsDashboard (./app/page.tsx:506:38)
+[0m [90m 314 |[39m         onAddContainer[33m=[39m{handleAddContainer}[0m
+[0m [90m 315 |[39m         userRole[33m=[39m{userRole}[0m
+[0m[31m[1m>[22m[39m[90m 316 |[39m         activeContainerType[33m=[39m{activeContainerType}[0m
+[0m [90m     |[39m                             [31m[1m^[22m[39m[0m
+[0m [90m 317 |[39m       [33m/[39m[33m>[39m[0m
+[0m [90m 318 |[39m     [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m[0m
+[0m [90m 319 |[39m   )[33m;[39m[0m
+ ⨯ app/page.tsx (316:29) @ activeContainerType
+ ⨯ ReferenceError: activeContainerType is not defined
+    at AtlasGlobalInsightsDashboard (./app/page.tsx:506:38)
+[0m [90m 314 |[39m         onAddContainer[33m=[39m{handleAddContainer}[0m
+[0m [90m 315 |[39m         userRole[33m=[39m{userRole}[0m
+[0m[31m[1m>[22m[39m[90m 316 |[39m         activeContainerType[33m=[39m{activeContainerType}[0m
+[0m [90m     |[39m                             [31m[1m^[22m[39m[0m
+[0m [90m 317 |[39m       [33m/[39m[33m>[39m[0m
+[0m [90m 318 |[39m     [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m[0m
+[0m [90m 319 |[39m   )[33m;[39m[0m
+ ✓ Compiled in 82ms (676 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 123ms (676 modules)
+ ✓ Compiled in 80ms (676 modules)
+ ✓ Compiled in 86ms (676 modules)
+ ✓ Compiled in 104ms (676 modules)
+ ✓ Compiled /login in 206ms (670 modules)
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled in 231ms (679 modules)
+ ✓ Compiled in 95ms (679 modules)
+ ✓ Compiled in 96ms (679 modules)
+ ✓ Compiled in 103ms (679 modules)
+ ✓ Compiled in 85ms (679 modules)
+ ✓ Compiled in 91ms (679 modules)
+ ✓ Compiled in 77ms (679 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 119ms (679 modules)
+ ⨯ components/Header.tsx (68:46) @ length
+ ⨯ TypeError: Cannot read properties of undefined (reading 'length')
+    at Header (./components/Header.tsx:58:69)
+[0m [90m 66 |[39m                 }[0m
+[0m [90m 67 |[39m               }}[0m
+[0m[31m[1m>[22m[39m[90m 68 |[39m               disabled[33m=[39m{loading [33m||[39m containers[33m.[39mlength [33m===[39m [35m0[39m}[0m
+[0m [90m    |[39m                                              [31m[1m^[22m[39m[0m
+[0m [90m 69 |[39m               className[33m=[39m[32m"border border-gray-300 rounded-md px-3 py-1.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 min-w-[200px]"[39m[0m
+[0m [90m 70 |[39m             [33m>[39m[0m
+[0m [90m 71 |[39m               {loading [33m?[39m ([0m
+ ✓ Compiled in 88ms (679 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 85ms (679 modules)
+ ✓ Compiled in 90ms (679 modules)
+ ✓ Compiled in 134ms (343 modules)
+ ✓ Compiled in 67ms (665 modules)
+ ⚠ ./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+./node_modules/@supabase/realtime-js/dist/module/index.js
+./node_modules/@supabase/supabase-js/dist/module/index.js
+./lib/supabase.ts
+./app/api/migrate/route.ts
+ ○ Compiling /api/migrate ...
+ ⚠ ./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+./node_modules/@supabase/realtime-js/dist/module/index.js
+./node_modules/@supabase/supabase-js/dist/module/index.js
+./lib/supabase.ts
+./app/api/migrate/route.ts
+ ⚠ ./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+./node_modules/@supabase/realtime-js/dist/module/index.js
+./node_modules/@supabase/supabase-js/dist/module/index.js
+./lib/supabase.ts
+./app/api/migrate/route.ts
+ ⚠ ./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+./node_modules/@supabase/realtime-js/dist/module/index.js
+./node_modules/@supabase/supabase-js/dist/module/index.js
+./lib/supabase.ts
+./app/api/migrate/route.ts
+ ⚠ ./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+./node_modules/@supabase/realtime-js/dist/module/index.js
+./node_modules/@supabase/supabase-js/dist/module/index.js
+./lib/supabase.ts
+./app/api/migrate/route.ts
+ ⚠ ./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+./node_modules/@supabase/realtime-js/dist/module/index.js
+./node_modules/@supabase/supabase-js/dist/module/index.js
+./lib/supabase.ts
+./app/api/migrate/route.ts
+ ✓ Compiled /api/migrate in 450ms (679 modules)
+ ✓ Compiled /not-found in 152ms (670 modules)
+ ✓ Compiled in 195ms (684 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⨯ components/Sidebar.tsx (99:38) @ toUpperCase
+ ⨯ TypeError: Cannot read properties of undefined (reading 'toUpperCase')
+    at Sidebar (./components/Sidebar.tsx:208:106)
+[0m [90m  97 |[39m             [33m<[39m[33mdiv[39m className[33m=[39m[32m"text-xs text-gray-500 font-semibold mb-3 tracking-wide"[39m[33m>[39m[0m
+[0m [90m  98 |[39m               {activeContainerType [33m===[39m [32m'all'[39m [33m?[39m [32m'ALL LISTS'[39m [33m:[39m [0m
+[0m[31m[1m>[22m[39m[90m  99 |[39m                [32m`${activeContainerType.toUpperCase()}S`[39m}[0m
+[0m [90m     |[39m                                      [31m[1m^[22m[39m[0m
+[0m [90m 100 |[39m                ({filteredContainers[33m.[39mlength})[0m
+[0m [90m 101 |[39m             [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m[0m
+[0m [90m 102 |[39m           )}[0m
+ ✓ Compiled in 120ms (684 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⨯ components/Sidebar.tsx (99:38) @ toUpperCase
+ ⨯ TypeError: Cannot read properties of undefined (reading 'toUpperCase')
+    at Sidebar (./components/Sidebar.tsx:208:106)
+[0m [90m  97 |[39m             [33m<[39m[33mdiv[39m className[33m=[39m[32m"text-xs text-gray-500 font-semibold mb-3 tracking-wide"[39m[33m>[39m[0m
+[0m [90m  98 |[39m               {activeContainerType [33m===[39m [32m'all'[39m [33m?[39m [32m'ALL LISTS'[39m [33m:[39m [0m
+[0m[31m[1m>[22m[39m[90m  99 |[39m                [32m`${activeContainerType.toUpperCase()}S`[39m}[0m
+[0m [90m     |[39m                                      [31m[1m^[22m[39m[0m
+[0m [90m 100 |[39m                ({filteredContainers[33m.[39mlength})[0m
+[0m [90m 101 |[39m             [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m[0m
+[0m [90m 102 |[39m           )}[0m
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 190ms (684 modules)
+ ⨯ components/Sidebar.tsx (63:13) @ getAvailableListTypes
+ ⨯ TypeError: getAvailableListTypes is not a function
+    at Sidebar (./components/Sidebar.tsx:89:33)
+[0m [90m 61 |[39m           [33m<[39m[33mTabsList[39m className[33m=[39m[32m"grid grid-cols-4 w-full h-10"[39m[33m>[39m[0m
+[0m [90m 62 |[39m             [33m<[39m[33mTabsTrigger[39m value[33m=[39m[32m"all"[39m className[33m=[39m[32m"text-xs font-medium"[39m[33m>[39m[33mAll[39m[33m<[39m[33m/[39m[33mTabsTrigger[39m[33m>[39m[0m
+[0m[31m[1m>[22m[39m[90m 63 |[39m             {getAvailableListTypes()[33m.[39mslice([35m0[39m[33m,[39m [35m3[39m)[33m.[39mmap(type [33m=>[39m ([0m
+[0m [90m    |[39m             [31m[1m^[22m[39m[0m
+[0m [90m 64 |[39m               [33m<[39m[33mTabsTrigger[39m key[33m=[39m{type} value[33m=[39m{type} className[33m=[39m[32m"text-xs font-medium capitalize"[39m[33m>[39m[0m
+[0m [90m 65 |[39m                 {type}s[0m
+[0m [90m 66 |[39m               [33m<[39m[33m/[39m[33mTabsTrigger[39m[33m>[39m[0m
+ ⨯ components/Sidebar.tsx (63:13) @ getAvailableListTypes
+ ⨯ TypeError: getAvailableListTypes is not a function
+    at Sidebar (./components/Sidebar.tsx:89:33)
+[0m [90m 61 |[39m           [33m<[39m[33mTabsList[39m className[33m=[39m[32m"grid grid-cols-4 w-full h-10"[39m[33m>[39m[0m
+[0m [90m 62 |[39m             [33m<[39m[33mTabsTrigger[39m value[33m=[39m[32m"all"[39m className[33m=[39m[32m"text-xs font-medium"[39m[33m>[39m[33mAll[39m[33m<[39m[33m/[39m[33mTabsTrigger[39m[33m>[39m[0m
+[0m[31m[1m>[22m[39m[90m 63 |[39m             {getAvailableListTypes()[33m.[39mslice([35m0[39m[33m,[39m [35m3[39m)[33m.[39mmap(type [33m=>[39m ([0m
+[0m [90m    |[39m             [31m[1m^[22m[39m[0m
+[0m [90m 64 |[39m               [33m<[39m[33mTabsTrigger[39m key[33m=[39m{type} value[33m=[39m{type} className[33m=[39m[32m"text-xs font-medium capitalize"[39m[33m>[39m[0m
+[0m [90m 65 |[39m                 {type}s[0m
+[0m [90m 66 |[39m               [33m<[39m[33m/[39m[33mTabsTrigger[39m[33m>[39m[0m
+ ✓ Compiled in 94ms (684 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 143ms (684 modules)
+ ✓ Compiled /login in 111ms (344 modules)
+ ✓ Compiled in 138ms (343 modules)
+ ✓ Compiled in 214ms (679 modules)
+ ✓ Compiled in 99ms (679 modules)
+ ✓ Compiled in 109ms (679 modules)
+ ✓ Compiled in 174ms (679 modules)
+ ✓ Compiled in 83ms (679 modules)
+ ✓ Compiled in 92ms (679 modules)
+ ✓ Compiled in 153ms (681 modules)
+ ✓ Compiled in 135ms (681 modules)
+ ✓ Compiled in 109ms (687 modules)
+ ✓ Compiled in 169ms (347 modules)
+ ✓ Compiled in 111ms (673 modules)
+ ✓ Compiled in 78ms (347 modules)
+ ✓ Compiled /api/atlas-proxy/login in 62ms (362 modules)
+🔐 Proxying login request to Atlas API...
+✅ Atlas API login successful
+ ✓ Compiled /api/atlas-proxy/risk-check in 35ms (364 modules)
+🔍 Proxying risk check request to Atlas API...
+✅ Atlas API risk check successful
+ ✓ Compiled /not-found in 114ms (678 modules)
+ ✓ Compiled in 173ms (347 modules)
+ ✓ Compiled in 69ms (673 modules)
+ ⚠ ./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+./node_modules/@supabase/realtime-js/dist/module/index.js
+./node_modules/@supabase/supabase-js/dist/module/index.js
+./lib/supabase.ts
+./app/api/fix-lists-table/route.ts
+🔄 Fixing lists table schema...
+ ○ Compiling /api/fix-lists-table ...
+Insert error (expected): {
+  code: 'PGRST204',
+  details: null,
+  hint: null,
+  message: "Could not find the 'description' column of 'lists' in the schema cache"
+}
+ ✓ Compiled /api/fix-lists-table in 269ms (687 modules)
+ ✓ Compiled /not-found in 62ms (678 modules)
+ ✓ Compiled in 173ms (692 modules)
+ ✓ Compiled in 205ms (687 modules)
+ ✓ Compiled in 174ms (687 modules)
+ ✓ Compiled in 291ms (687 modules)

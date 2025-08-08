@@ -63,6 +63,17 @@ The backend services are located in separate directories:
 - `../atlas_intelligence_db/` - Database services
 - `../atlas_intelligence_ml/` - ML/AI processing services
 
+## API Documentation
+
+Atlas Global V4 API documentation is available in `atlas_api_docs.txt`. Key endpoints include:
+
+- **Base URL**: `https://atlas-global-v4.fragrant-recipe-007f.workers.dev`
+- **Authentication**: JWT-based auth with signup/login endpoints
+- **Risk Checks**: `/api/risk-checks` - Performs background checks using AtlasCompass V3 and/or LexisNexis
+- **Required Headers**: `Authorization: Bearer <token>` for authenticated endpoints
+
+The API supports comprehensive risk assessments with configurable options for confidence thresholds, profile limits, and caching behavior.
+
 ## Component Architecture
 
 - **Header**: Navigation, role switching, action buttons
@@ -70,3 +81,12 @@ The backend services are located in separate directories:
 - **ContainerDetails**: Detailed container information and actions
 - **QuickScreenMode**: Streamlined visitor screening interface
 - **EmptyState**: Placeholder when no container selected
+
+## Important Notes for Claude Code
+
+- **CRITICAL: ALWAYS exclude node_modules from ALL file operations**: 
+  - LS tool: Use `ignore: ["node_modules"]` parameter
+  - Grep tool: Use specific glob patterns like `**/*.{ts,tsx,js,jsx}` in src directories only
+  - Glob tool: Use targeted patterns that exclude node_modules
+  - This prevents sending massive amounts of data and hitting rate limits
+- **Rate Limiting**: Be mindful of context size to avoid overwhelming the LLM with too much data per request

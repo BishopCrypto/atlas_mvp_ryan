@@ -1,0 +1,466 @@
+# Atlas Global V4 - Essential API Documentation
+
+## Base URL
+```
+https://atlas-global-v4.fragrant-recipe-007f.workers.dev
+```
+
+---
+
+## 1. Sign Up - Create New Account
+
+Creates a new user account with a company/tenant.
+
+### Endpoint
+```
+POST /api/auth/signup
+```
+
+### Request
+```bash
+curl -X POST https://atlas-global-v4.fragrant-recipe-007f.workers.dev/api/auth/signup \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "john.doe@company.com",
+    "password": "SecurePassword123!",
+    "firstName": "John",
+    "lastName": "Doe",
+    "companyName": "Acme Corporation"
+  }'
+```
+
+### Parameters
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `email` | string | Yes | User's email address |
+| `password` | string | Yes | Password (min 8 characters recommended) |
+| `firstName` | string | Yes | User's first name |
+| `lastName` | string | Yes | User's last name |
+| `companyName` | string | Yes | Company/organization name |
+
+### Response
+```json
+{
+  "message": "Signup successful",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODExNmJjNC1jOGYzLTQ0YmItODdkYi1lMDNiMzk4NDRjNTUiLCJ0ZW5hbnRfaWQiOjEyMywicm9sZSI6ImFkbWluIiwiZW1haWwiOiJqb2huLmRvZUBjb21wYW55LmNvbSIsImlhdCI6MTcwNTMyMDAwMCwiZXhwIjoxNzA1NDA2NDAwfQ.xyz123",
+  "supabase_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "refresh_token": "refresh_token_here"
+}
+```
+
+**Important:** Save the `token` value - you'll need it for all authenticated API requests.
+
+---
+
+## 2. Sign In - Login to Existing Account
+
+Authenticates an existing user and returns access tokens.
+
+### Endpoint
+```
+POST /api/auth/login
+```
+
+### Request
+```bash
+curl -X POST https://atlas-global-v4.fragrant-recipe-007f.workers.dev/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "john.doe@company.com",
+    "password": "SecurePassword123!"
+  }'
+```
+
+### Parameters
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `email` | string | Yes | Registered email address |
+| `password` | string | Yes | Account password |
+
+### Response
+```json
+{
+  "message": "Login successful",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODExNmJjNC1jOGYzLTQ0YmItODdkYi1lMDNiMzk4NDRjNTUiLCJ0ZW5hbnRfaWQiOjEyMywicm9sZSI6ImFkbWluIiwiZW1haWwiOiJqb2huLmRvZUBjb21wYW55LmNvbSIsImlhdCI6MTcwNTMyMDAwMCwiZXhwIjoxNzA1NDA2NDAwfQ.xyz123",
+  "supabase_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "refresh_token": "refresh_token_here"
+}
+```
+
+---
+
+## 3. Risk Check Endpoint
+
+Performs comprehensive risk assessment using AtlasCompass V3 and/or LexisNexis Comprehensive Report.
+
+### Endpoint
+```
+POST /api/risk-checks
+```
+
+### Basic Request - AtlasCompass V3 Only
+```bash
+curl -X POST https://atlas-global-v4.fragrant-recipe-007f.workers.dev/api/risk-checks \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN_HERE" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "firstName": "John",
+    "lastName": "Smith",
+    "birthday": "1985-03-15",
+    "address": "123 Main St",
+    "city": "New York",
+    "state": "NY",
+    "zip": "10001",
+    "country": "US",
+    "checks": ["atlascompass_v3"]
+  }'
+```
+
+### Request with Both AtlasCompass V3 and LexisNexis Comprehensive
+```bash
+curl -X POST https://atlas-global-v4.fragrant-recipe-007f.workers.dev/api/risk-checks \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN_HERE" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "firstName": "John",
+    "lastName": "Smith",
+    "middleName": "Michael",
+    "birthday": "1985-03-15",
+    "address": "123 Main St",
+    "city": "New York",
+    "state": "NY",
+    "zip": "10001",
+    "country": "US",
+    "checks": ["atlascompass_v3", "lexis_comprehensive"]
+  }'
+```
+
+### Request Body Parameters
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `firstName` | string | Yes | Person's first name |
+| `lastName` | string | Yes | Person's last name |
+| `middleName` | string | No | Person's middle name |
+| `birthday` | string | No | Date of birth (YYYY-MM-DD format) |
+| `address` | string | No | Street address |
+| `city` | string | No | City |
+| `state` | string | No | State/Province (2-letter code) |
+| `zip` | string | No | ZIP/Postal code |
+| `country` | string | No | Country code (e.g., "US") |
+| `checks` | array | Yes | Check types: `["atlascompass_v3"]` and/or `["lexis_comprehensive"]` |
+
+### Optional Query Parameters
+Add these to the URL to modify behavior:
+
+| Parameter | Usage | Description |
+|-----------|-------|-------------|
+| `disableCache=true` | `/api/risk-checks?disableCache=true` | Force fresh data (bypass cache) |
+| `enableLogs=true` | `/api/risk-checks?enableLogs=true` | Include detailed logs in response |
+
+### Example with Query Parameters
+```bash
+curl -X POST "https://atlas-global-v4.fragrant-recipe-007f.workers.dev/api/risk-checks?disableCache=true&enableLogs=true" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN_HERE" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "firstName": "John",
+    "lastName": "Smith",
+    "birthday": "1985-03-15",
+    "checks": ["atlascompass_v3", "lexis_comprehensive"]
+  }'
+```
+
+### AtlasCompass V3 Configuration (Optional)
+Customize AtlasCompass V3 behavior by adding `atlasCompassOptions`:
+
+```bash
+curl -X POST https://atlas-global-v4.fragrant-recipe-007f.workers.dev/api/risk-checks \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN_HERE" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "firstName": "John",
+    "lastName": "Smith",
+    "birthday": "1985-03-15",
+    "checks": ["atlascompass_v3"],
+    "atlasCompassOptions": {
+      "minConfidenceThreshold": 30,
+      "requireNameMatch": true,
+      "weightedRiskCalculation": true,
+      "maxProfilesInResponse": 10,
+      "excludeCriticalIfLowConfidence": false
+    }
+  }'
+```
+
+### AtlasCompass Options Explained
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `minConfidenceThreshold` | number | 30 | Minimum confidence score (0-100) to include a match |
+| `requireNameMatch` | boolean | true | Require the name to match for inclusion |
+| `weightedRiskCalculation` | boolean | true | Use weighted scoring algorithm |
+| `maxProfilesInResponse` | number | 10 | Maximum number of profiles to return |
+| `excludeCriticalIfLowConfidence` | boolean | true | Filter out critical matches with low confidence |
+
+### Response Structure
+
+#### AtlasCompass V3 Response
+```json
+{
+  "checksRequested": ["atlascompass_v3"],
+  "results": {
+    "atlascompass_v3": {
+      "requestId": "req_abc123xyz",
+      "status": "complete",
+      "summary": {
+        "totalProfilesFound": 3,
+        "overallRiskLevel": "MEDIUM",
+        "highestConfidenceScore": 85,
+        "criticalRisksFound": 0,
+        "highRisksFound": 1,
+        "mediumRisksFound": 2,
+        "lowRisksFound": 0
+      },
+      "profiles": [
+        {
+          "confidence": 85,
+          "riskLevel": "MEDIUM",
+          "firstName": "John",
+          "lastName": "Smith",
+          "middleName": "M",
+          "dateOfBirth": "1985-03-15",
+          "addresses": [
+            {
+              "address": "123 Main St",
+              "city": "New York",
+              "state": "NY",
+              "zip": "10001"
+            }
+          ],
+          "riskFactors": [
+            "Criminal History - Misdemeanor",
+            "Financial Issues - Bankruptcy"
+          ],
+          "additionalInfo": {
+            "aliases": ["Johnny Smith", "J Smith"],
+            "associatedPhones": ["555-1234"],
+            "criminalRecords": 1,
+            "bankruptcies": 1
+          }
+        }
+      ],
+      "metadata": {
+        "processedAt": "2024-01-15T10:30:00Z",
+        "cacheStatus": "miss",
+        "responseTimeMs": 1250,
+        "dataSource": "primary"
+      }
+    }
+  }
+}
+```
+
+#### LexisNexis Comprehensive Report Response
+```json
+{
+  "checksRequested": ["lexis_comprehensive"],
+  "results": {
+    "lexis_comprehensive": {
+      "data": {
+        "UniqueId": "123456789",
+        "Names": [
+          {
+            "First": "John",
+            "Middle": "Michael",
+            "Last": "Smith"
+          }
+        ],
+        "DOBs": ["1985-03-15"],
+        "Addresses": [
+          {
+            "StreetAddress": "123 Main St",
+            "City": "New York",
+            "State": "NY",
+            "Zip": "10001"
+          }
+        ],
+        "CriminalRecords": {
+          "RecordCount": 1,
+          "Records": [
+            {
+              "OffenseDescription": "Misdemeanor Theft",
+              "OffenseDate": "2010-05-20",
+              "Court": "New York County Court"
+            }
+          ]
+        },
+        "SexualOffenses": {
+          "RegisteredOffender": false
+        },
+        "Bankruptcies": {
+          "RecordCount": 1,
+          "Records": [
+            {
+              "FilingDate": "2015-08-10",
+              "Chapter": "7",
+              "DischargeDate": "2016-01-15"
+            }
+          ]
+        }
+      },
+      "markdown_report": "# Comprehensive Background Report\n\n## Subject Information\n- **Name:** John Michael Smith\n- **Date of Birth:** March 15, 1985\n- **Current Address:** 123 Main St, New York, NY 10001\n\n## Risk Assessment Summary\n**Overall Risk Level: MEDIUM**\n\n### Key Findings:\n1. **Criminal History:** 1 misdemeanor record (2010)\n2. **Financial Issues:** Chapter 7 bankruptcy (2015-2016)\n3. **Sex Offender Registry:** Not found\n\n## Detailed Findings\n\n### Criminal Records\n- Misdemeanor Theft (May 20, 2010)\n  - Court: New York County Court\n  - Status: Case closed\n\n### Financial History\n- Chapter 7 Bankruptcy\n  - Filed: August 10, 2015\n  - Discharged: January 15, 2016\n\n## Recommendations\n- Moderate risk profile due to historical criminal and financial issues\n- Consider additional verification for high-security positions\n- Review company policies regarding bankruptcy history",
+      "metadata": {
+        "requestId": "req_def456uvw",
+        "timestamp": 1705320000000,
+        "responseTimeMs": 2500,
+        "risk_level": "medium",
+        "status": "complete",
+        "transactionId": "txn_789012",
+        "report_generation_status": "success"
+      }
+    }
+  }
+}
+```
+
+#### Combined Response (Both Checks)
+```json
+{
+  "checksRequested": ["atlascompass_v3", "lexis_comprehensive"],
+  "results": {
+    "atlascompass_v3": {
+      // AtlasCompass V3 response structure as shown above
+    },
+    "lexis_comprehensive": {
+      // LexisNexis response structure as shown above
+    }
+  }
+}
+```
+
+---
+
+## Quick Testing Examples
+
+### 1. Complete Flow - Sign Up, Login, and Risk Check
+
+```bash
+# Step 1: Sign Up
+curl -X POST https://atlas-global-v4.fragrant-recipe-007f.workers.dev/api/auth/signup \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "test@example.com",
+    "password": "TestPass123!",
+    "firstName": "Test",
+    "lastName": "User",
+    "companyName": "Test Company"
+  }'
+
+# Save the token from response
+
+# Step 2: Risk Check with AtlasCompass V3
+curl -X POST https://atlas-global-v4.fragrant-recipe-007f.workers.dev/api/risk-checks \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "firstName": "John",
+    "lastName": "Doe",
+    "birthday": "1990-01-15",
+    "checks": ["atlascompass_v3"]
+  }'
+
+# Step 3: Risk Check with Both Providers
+curl -X POST https://atlas-global-v4.fragrant-recipe-007f.workers.dev/api/risk-checks \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "birthday": "1985-06-20",
+    "address": "456 Oak Ave",
+    "city": "Los Angeles",
+    "state": "CA",
+    "zip": "90001",
+    "checks": ["atlascompass_v3", "lexis_comprehensive"]
+  }'
+```
+
+### 2. Test with Cache Disabled
+
+```bash
+curl -X POST "https://atlas-global-v4.fragrant-recipe-007f.workers.dev/api/risk-checks?disableCache=true" \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "firstName": "Test",
+    "lastName": "NoCache",
+    "checks": ["atlascompass_v3"]
+  }'
+```
+
+### 3. Test with Detailed Logging
+
+```bash
+curl -X POST "https://atlas-global-v4.fragrant-recipe-007f.workers.dev/api/risk-checks?enableLogs=true" \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "firstName": "Debug",
+    "lastName": "Test",
+    "checks": ["atlascompass_v3", "lexis_comprehensive"]
+  }'
+```
+
+---
+
+## Error Responses
+
+### 401 Unauthorized
+```json
+{
+  "error": "Missing or invalid authorization header"
+}
+```
+**Solution:** Include valid JWT token in Authorization header
+
+### 400 Bad Request
+```json
+{
+  "error": {
+    "code": "MISSING_REQUIRED_FIELDS",
+    "message": "Missing required fields: firstName and lastName are required"
+  }
+}
+```
+**Solution:** Include all required fields
+
+### 500 Internal Server Error
+```json
+{
+  "error": "Service temporarily unavailable"
+}
+```
+**Solution:** Retry after a few seconds or contact support
+
+---
+
+## Important Notes
+
+1. **Token Expiration:** JWT tokens expire after 24 hours. Login again to get a new token.
+
+2. **Rate Limiting:** The API has rate limits. If you receive a 429 response, wait before retrying.
+
+3. **Cache Behavior:** 
+   - By default, responses are cached for performance
+   - Use `disableCache=true` to force fresh data
+   - Cache is based on person's name and date of birth
+
+4. **Data Requirements:**
+   - Minimum required: firstName and lastName
+   - More data (birthday, address) improves match accuracy
+   - AtlasCompass V3 works best with full address information
+   - LexisNexis requires at least name and birthday for best results
+
+5. **Response Times:**
+   - AtlasCompass V3: Usually 1-2 seconds
+   - LexisNexis Comprehensive: Usually 2-5 seconds
+   - Both checks together: 3-7 seconds (run in parallel)

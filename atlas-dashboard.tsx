@@ -524,7 +524,7 @@ const AtlasGlobalInsightsDashboard = () => {
                               <Users className="h-4 w-4 text-indigo-700" />
                             </div>
                             <div>
-                              <div className="font-medium">John Doe</div>
+                              <div className="font-medium">Ryan Scott</div>
                               <div className="text-xs text-gray-500">Meeting with HR • 10:15 AM</div>
                             </div>
                           </div>
