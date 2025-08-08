@@ -5,7 +5,7 @@ import { Ship, Users, Briefcase, Clock, AlertTriangle, CheckCircle, Calendar, Ho
 import { supabase } from '@/lib/supabase';
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
-import ContainerDetails from '@/components/ContainerDetails';
+import ContainerDetails from '@/components/ContainerDetailsNew';
 import QuickScreenMode from '@/components/QuickScreenMode';
 import EmptyState from '@/components/EmptyState';
 import AddContainerModal from '@/components/AddContainerModal';
@@ -503,6 +503,17 @@ const AtlasGlobalInsightsDashboard = () => {
                 <ContainerDetails
                   selectedContainer={selectedList}
                   containerIcons={containerIcons}
+                  onRefreshData={async () => {
+                    if (tenantData?.id) {
+                      const updatedContainers = await fetchContainers(tenantData.id);
+                      if (selectedContainer) {
+                        const updatedContainer = updatedContainers.find(c => c.id === selectedContainer.id);
+                        if (updatedContainer) {
+                          setSelectedContainer(updatedContainer);
+                        }
+                      }
+                    }
+                  }}
                 />
               )}
             </div>

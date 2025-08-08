@@ -334,3 +334,137 @@ Insert error (expected): {
  ✓ Compiled in 205ms (687 modules)
  ✓ Compiled in 174ms (687 modules)
  ✓ Compiled in 291ms (687 modules)
+ ✓ Compiled in 162ms (347 modules)
+ ✓ Compiled in 124ms (347 modules)
+ ✓ Compiled in 268ms (695 modules)
+ ✓ Compiled in 114ms (695 modules)
+ ⚠ ./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+./node_modules/@supabase/realtime-js/dist/module/index.js
+./node_modules/@supabase/supabase-js/dist/module/index.js
+./lib/supabase.ts
+./app/api/setup-lists/route.ts
+🔄 Setting up lists table...
+ ○ Compiling /api/setup-lists ...
+❌ Error setting up lists table: {
+  code: 'PGRST202',
+  details: 'Searched for the function public.execute_sql with parameter sql_query or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.',
+  hint: null,
+  message: 'Could not find the function public.execute_sql(sql_query) in the schema cache'
+}
+Attempting query: CREATE TABLE IF NOT EXISTS lists (
+            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            container_id UUID NOT NULL REFERENCES containers(id) ON DELETE CASCADE,
+            tenant_id UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
+            name TEXT NOT NULL,
+            type TEXT NOT NULL CHECK (type IN ('sailing', 'crew', 'vendor', 'guest', 'visitor')),
+            description TEXT,
+            count INTEGER NOT NULL DEFAULT 0,
+            status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'in-progress', 'clear', 'attention', 'complete')),
+            due_date DATE,
+            flagged INTEGER NOT NULL DEFAULT 0,
+            is_active BOOLEAN NOT NULL DEFAULT true,
+            created_by UUID REFERENCES users(id) ON DELETE SET NULL,
+            created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
+            updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
+        )
+Attempting query: ALTER TABLE lists ENABLE ROW LEVEL SECURITY
+Attempting query: DROP POLICY IF EXISTS "Enable read access for lists" ON lists
+Attempting query: DROP POLICY IF EXISTS "Enable insert access for lists" ON lists
+Attempting query: DROP POLICY IF EXISTS "Enable update access for lists" ON lists
+Attempting query: CREATE POLICY "Enable read access for lists" ON lists FOR SELECT USING (true)
+Attempting query: CREATE POLICY "Enable insert access for lists" ON lists FOR INSERT WITH CHECK (true)
+Attempting query: CREATE POLICY "Enable update access for lists" ON lists FOR UPDATE USING (true)
+Attempting query: CREATE INDEX IF NOT EXISTS idx_lists_container_id ON lists(container_id)
+Attempting query: CREATE INDEX IF NOT EXISTS idx_lists_tenant_id ON lists(tenant_id)
+Attempting query: CREATE INDEX IF NOT EXISTS idx_lists_type ON lists(type)
+✅ Lists table setup completed
+ ⚠ ./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+./node_modules/@supabase/realtime-js/dist/module/index.js
+./node_modules/@supabase/supabase-js/dist/module/index.js
+./lib/supabase.ts
+./app/api/setup-lists/route.ts
+ ✓ Compiled /api/setup-lists in 168ms (681 modules)
+ ⚠ ./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+./node_modules/@supabase/realtime-js/dist/module/index.js
+./node_modules/@supabase/supabase-js/dist/module/index.js
+./lib/supabase.ts
+./app/api/setup-list-members/route.ts
+🔄 Setting up list_members table...
+ ○ Compiling /api/setup-list-members ...
+Table creation needed. Error: Could not find the table 'public.list_members' in the schema cache
+ ⚠ ./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+./node_modules/@supabase/realtime-js/dist/module/index.js
+./node_modules/@supabase/supabase-js/dist/module/index.js
+./lib/supabase.ts
+./app/api/setup-list-members/route.ts
+ ✓ Compiled /api/setup-list-members in 75ms (681 modules)
+ ⚠ ./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+./node_modules/@supabase/realtime-js/dist/module/index.js
+./node_modules/@supabase/supabase-js/dist/module/index.js
+./lib/supabase.ts
+./app/api/force-create-table/route.ts
+🔄 Force creating list_members table...
+ ○ Compiling /api/force-create-table ...
+RPC approach failed: {
+  code: 'PGRST202',
+  details: 'Searched for the function public.sql with parameter query or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.',
+  hint: null,
+  message: 'Could not find the function public.sql(query) in the schema cache'
+}
+ ⚠ ./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+./node_modules/@supabase/realtime-js/dist/module/index.js
+./node_modules/@supabase/supabase-js/dist/module/index.js
+./lib/supabase.ts
+./app/api/force-create-table/route.ts
+ ⚠ ./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+./node_modules/@supabase/realtime-js/dist/module/index.js
+./node_modules/@supabase/supabase-js/dist/module/index.js
+./lib/supabase.ts
+./app/api/force-create-table/route.ts
+ ⚠ ./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+./node_modules/@supabase/realtime-js/dist/module/index.js
+./node_modules/@supabase/supabase-js/dist/module/index.js
+./lib/supabase.ts
+./app/api/force-create-table/route.ts
+ ⚠ ./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+./node_modules/@supabase/realtime-js/dist/module/index.js
+./node_modules/@supabase/supabase-js/dist/module/index.js
+./lib/supabase.ts
+./app/api/setup-list-members/route.ts
+ ✓ Compiled /not-found in 563ms (700 modules)
