@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+import { GeminiAnalysisService, GeminiAnalysisResult } from './gemini-analysis';
 
 export interface ScreeningParams {
   name: string;
@@ -15,6 +16,7 @@ export interface ScreeningResult {
   riskLevel: 'low' | 'medium' | 'high' | 'critical';
   matches: any[];
   cachedAt: string;
+  geminiAnalysis?: GeminiAnalysisResult;
 }
 
 export interface CacheEntry {
@@ -55,12 +57,33 @@ export class ScreeningService {
 
     // 2. Run new screening via Atlas API
     console.log('🌐 Running new screening via Atlas API');
-    const result = await this.runAtlasScreening(params);
+    const atlasResult = await this.runAtlasScreening(params);
     
-    // 3. Cache the result
-    await this.cacheResult(personId, tenantId, params, result);
+    // 3. Run Gemini analysis on Atlas results
+    console.log('🤖 Running Gemini AI analysis...');
+    try {
+      const geminiAnalysis = await GeminiAnalysisService.analyzeScreeningResults(
+        {
+          name: params.name,
+          email: params.email,
+          dateOfBirth: params.dateOfBirth,
+          nationality: params.nationality,
+          context: 'passenger screening' // Could be made dynamic based on list type
+        },
+        { results: { atlascompass_v3: { profiles: atlasResult.matches } } }
+      );
+      
+      atlasResult.geminiAnalysis = geminiAnalysis;
+      console.log('✅ Gemini analysis completed');
+      
+    } catch (error) {
+      console.error('⚠️ Gemini analysis failed, continuing without AI insights:', error);
+    }
     
-    return result;
+    // 4. Cache the result (including Gemini analysis)
+    await this.cacheResult(personId, tenantId, params, atlasResult);
+    
+    return atlasResult;
   }
 
   /**
@@ -194,7 +217,8 @@ export class ScreeningService {
         atlas_response: {
           matches: result.matches,
           requestId: result.requestId,
-          cachedAt: result.cachedAt
+          cachedAt: result.cachedAt,
+          geminiAnalysis: result.geminiAnalysis
         },
         match_count: result.matchCount,
         highest_confidence_score: result.highestConfidence,
@@ -218,7 +242,8 @@ export class ScreeningService {
       highestConfidence: Number(cache.highest_confidence_score),
       riskLevel: cache.risk_level as any,
       matches: cache.atlas_response.matches || [],
-      cachedAt: cache.cached_at
+      cachedAt: cache.cached_at,
+      geminiAnalysis: cache.atlas_response.geminiAnalysis
     };
   }
 

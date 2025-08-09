@@ -528,6 +528,7 @@ const AtlasGlobalInsightsDashboard = () => {
                 <ContainerDetails
                   selectedContainer={selectedList}
                   containerIcons={containerIcons}
+                  tenantData={tenantData}
                   onRefreshData={async () => {
                     if (tenantData?.id) {
                       const updatedContainers = await fetchContainers(tenantData.id);

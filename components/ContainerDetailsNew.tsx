@@ -33,12 +33,14 @@ interface ContainerDetailsProps {
   selectedContainer: Container;
   containerIcons: Record<string, React.ReactNode>;
   onRefreshData: () => Promise<void>;
+  tenantData?: { id: string; name: string };
 }
 
 const ContainerDetails: React.FC<ContainerDetailsProps> = ({
   selectedContainer,
   containerIcons,
-  onRefreshData
+  onRefreshData,
+  tenantData
 }) => {
   const [members, setMembers] = useState<ListMember[]>([]);
   const [loading, setLoading] = useState(true);
@@ -177,6 +179,66 @@ const ContainerDetails: React.FC<ContainerDetailsProps> = ({
     }
   };
 
+  // Handle refresh screening for a specific person
+  const handleRefreshScreening = async (personId: string) => {
+    try {
+      const person = members.find(m => m.id === personId);
+      if (!person) {
+        throw new Error('Person not found');
+      }
+
+      console.log('🔄 Refreshing screening for:', person.name);
+
+      // Run fresh screening (bypass cache)
+      const screeningResult = await ScreeningService.screenPerson(
+        personId,
+        tenantData?.id || 'unknown',
+        {
+          name: person.name,
+          email: person.email,
+          phone: person.phone,
+          dateOfBirth: person.date_of_birth,
+          nationality: person.nationality
+        },
+        true // Force bypass cache
+      );
+
+      // Update person with new screening results
+      const statusSummary = ScreeningService.getStatusSummary(screeningResult);
+      
+      const { error } = await supabase
+        .from('list_members')
+        .update({
+          screening_status: statusSummary.status,
+          screening_score: Math.round(screeningResult.highestConfidence * 100),
+          screening_details: JSON.stringify({
+            requestId: screeningResult.requestId,
+            matchCount: screeningResult.matchCount,
+            highestConfidence: screeningResult.highestConfidence,
+            riskLevel: screeningResult.riskLevel,
+            matches: screeningResult.matches,
+            geminiAnalysis: screeningResult.geminiAnalysis,
+            summary: statusSummary.summary,
+            screenedAt: screeningResult.cachedAt
+          })
+        })
+        .eq('id', personId);
+
+      if (error) {
+        throw error;
+      }
+
+      console.log('✅ Screening refreshed successfully');
+
+      // Refresh the members list to update UI
+      await fetchMembers();
+
+    } catch (error) {
+      console.error('Failed to refresh screening:', error);
+      throw error;
+    }
+  };
+
 
   return (
     <div className="flex h-full">
@@ -239,6 +301,7 @@ const ContainerDetails: React.FC<ContainerDetailsProps> = ({
         <ScreeningDetails 
           person={selectedPerson}
           onClose={() => setSelectedPerson(null)}
+          onRefreshScreening={handleRefreshScreening}
         />
       )}
     </div>

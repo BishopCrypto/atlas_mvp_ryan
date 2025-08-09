@@ -1,13 +1,46 @@
-import React from 'react';
-import { AlertTriangle, Shield, User, Calendar, MapPin, Phone, Mail, ExternalLink } from 'lucide-react';
+import React, { useState } from 'react';
+import { AlertTriangle, Shield, User, Calendar, MapPin, Phone, Mail, ExternalLink, RefreshCw } from 'lucide-react';
 import { ScreeningResult } from '@/lib/screening';
 
 interface ScreeningDetailsProps {
   person: any;
   onClose: () => void;
+  onRefreshScreening?: (personId: string) => Promise<void>;
 }
 
-const ScreeningDetails: React.FC<ScreeningDetailsProps> = ({ person, onClose }) => {
+const ScreeningDetails: React.FC<ScreeningDetailsProps> = ({ person, onClose, onRefreshScreening }) => {
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  
+  // Format time ago helper
+  const formatTimeAgo = (dateString: string) => {
+    const now = new Date();
+    const past = new Date(dateString);
+    const diffMs = now.getTime() - past.getTime();
+    
+    const minutes = Math.floor(diffMs / 60000);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    
+    if (days > 0) return `${days} day${days > 1 ? 's' : ''} ago`;
+    if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+    return 'Just now';
+  };
+  
+  // Handle refresh screening
+  const handleRefreshScreening = async () => {
+    if (!onRefreshScreening || isRefreshing) return;
+    
+    setIsRefreshing(true);
+    try {
+      await onRefreshScreening(person.id);
+    } catch (error) {
+      console.error('Failed to refresh screening:', error);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
   // Parse screening data from person
   let screeningData = null;
   
@@ -78,14 +111,37 @@ const ScreeningDetails: React.FC<ScreeningDetailsProps> = ({ person, onClose }) 
     <div className="w-1/3 bg-white border-l border-gray-200 overflow-y-auto">
       <div className="p-6">
         {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-gray-900">Screening Report</h2>
-          <button 
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600"
-          >
-            ✕
-          </button>
+        <div className="flex justify-between items-center mb-4">
+          <div>
+            <h2 className="text-xl font-bold text-gray-900">Screening Report</h2>
+            {screeningData?.screenedAt && (
+              <p className="text-xs text-gray-500 mt-1">
+                Last updated {formatTimeAgo(screeningData.screenedAt)}
+              </p>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            {onRefreshScreening && (
+              <button 
+                onClick={handleRefreshScreening}
+                disabled={isRefreshing}
+                className={`flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                  isRefreshing 
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                    : 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200'
+                }`}
+              >
+                <RefreshCw className={`h-3 w-3 ${isRefreshing ? 'animate-spin' : ''}`} />
+                {isRefreshing ? 'Refreshing...' : 'Refresh'}
+              </button>
+            )}
+            <button 
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-600"
+            >
+              ✕
+            </button>
+          </div>
         </div>
 
         {/* Person Info */}
