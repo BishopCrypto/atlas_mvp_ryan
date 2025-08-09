@@ -107,10 +107,6 @@ const Header: React.FC<HeaderProps> = ({
               Quick Screen
             </button>
           )}
-          <button className="flex items-center bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-md px-3 py-2 text-sm font-medium transition-colors">
-            <Calendar className="h-4 w-4 mr-2" />
-            Schedule
-          </button>
           <button 
             onClick={onAddContainer}
             className="flex items-center bg-indigo-600 hover:bg-indigo-700 text-white rounded-md px-3 py-2 text-sm font-medium transition-colors"

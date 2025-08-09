@@ -87,7 +87,7 @@ const AtlasGlobalInsightsDashboard = () => {
         console.error('Error fetching tenant roles:', error);
         // Fall back to default roles if database fetch fails
         setTenantRoles([
-          { name: 'sailings', display_name: `${tenantData?.name || 'Tenant'} Sailings` },
+          { name: 'sailings', display_name: 'Management' },
           { name: 'sailingstaff', display_name: 'Sailing Staff' },
           { name: 'vendors', display_name: 'Vendors' },
           { name: 'frontdesk', display_name: 'Guest Services' }
@@ -440,14 +440,12 @@ const AtlasGlobalInsightsDashboard = () => {
   };
   
   const getRoleTitle = () => {
-    const tenantName = tenantData?.name?.split(' ')[0] || 'Cruise';
-    
     switch(userRole) {
-      case 'sailings': return `${tenantName} Sailings`;
-      case 'sailingstaff': return 'Sailing Staff Management';
+      case 'sailings': return 'Management';
+      case 'sailingstaff': return 'Sailing Staff';
       case 'vendors': return 'Vendor Management';
       case 'frontdesk': return 'Guest Services';
-      default: return `${tenantName} Intelligence`;
+      default: return 'Intelligence';
     }
   };
 
@@ -478,6 +476,11 @@ const AtlasGlobalInsightsDashboard = () => {
     setQuickScreenMode(false);
   };
 
+  const handleContainerChange = (container: any) => {
+    setSelectedContainer(container);
+    setSelectedList(null); // Clear the selected list when container changes
+  };
+
   return (
     <div className="flex flex-col h-screen">
       <Header
@@ -494,7 +497,7 @@ const AtlasGlobalInsightsDashboard = () => {
         onAddContainer={openAddModal}
         containers={containers}
         selectedContainer={selectedContainer}
-        onSelectContainer={setSelectedContainer}
+        onSelectContainer={handleContainerChange}
         loading={loading}
       />
       
@@ -514,7 +517,7 @@ const AtlasGlobalInsightsDashboard = () => {
               getTypeCount={getTypeCount}
               containers={containers}
               selectedRealContainer={selectedContainer}
-              onSelectContainer={setSelectedContainer}
+              onSelectContainer={handleContainerChange}
               onAddList={openAddListModal}
             />
             

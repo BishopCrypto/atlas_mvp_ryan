@@ -32,7 +32,7 @@ export const useTenant = () => {
         console.error('Error fetching tenant roles:', error);
         // Fall back to default roles if database fetch fails
         setTenantRoles([
-          { name: 'sailings', display_name: `${tenantData?.name || 'Cruise'} Sailings` },
+          { name: 'sailings', display_name: 'Management' },
           { name: 'sailingstaff', display_name: 'Sailing Staff' },
           { name: 'vendors', display_name: 'Vendors' },
           { name: 'frontdesk', display_name: 'Guest Services' }

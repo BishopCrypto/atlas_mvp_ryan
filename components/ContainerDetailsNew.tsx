@@ -3,6 +3,7 @@ import { AlertTriangle, Clock, Users, ExternalLink, Plus, Shield, CheckCircle } 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { supabase } from '@/lib/supabase';
 import AddPersonModal from './AddPersonModal';
+import ScreeningDetails from './ScreeningDetails';
 import { ScreeningService } from '@/lib/screening';
 
 interface Container {
@@ -40,6 +41,7 @@ const ContainerDetails: React.FC<ContainerDetailsProps> = ({
   const [members, setMembers] = useState<ListMember[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAddPersonModalOpen, setIsAddPersonModalOpen] = useState(false);
+  const [selectedPerson, setSelectedPerson] = useState<ListMember | null>(null);
 
   // Fetch list members
   const fetchMembers = async () => {
@@ -133,7 +135,8 @@ const ContainerDetails: React.FC<ContainerDetailsProps> = ({
               phone: cleanPersonData.phone,
               dateOfBirth: cleanPersonData.date_of_birth,
               nationality: cleanPersonData.nationality
-            }
+            },
+            true // Bypass cache for testing - TODO: remove after API is confirmed working
           );
 
           // Update person with screening results
@@ -144,12 +147,15 @@ const ContainerDetails: React.FC<ContainerDetailsProps> = ({
             .update({
               screening_status: statusSummary.status,
               screening_score: Math.round(screeningResult.highestConfidence * 100),
-              screening_details: {
+              screening_details: JSON.stringify({
+                requestId: screeningResult.requestId,
                 matchCount: screeningResult.matchCount,
+                highestConfidence: screeningResult.highestConfidence,
                 riskLevel: screeningResult.riskLevel,
+                matches: screeningResult.matches,
                 summary: statusSummary.summary,
                 screenedAt: screeningResult.cachedAt
-              }
+              })
             })
             .eq('id', data.id);
 
@@ -180,8 +186,10 @@ const ContainerDetails: React.FC<ContainerDetailsProps> = ({
   };
 
   return (
-    <div>
-      <div className="mb-6 flex justify-between items-center">
+    <div className="flex h-full">
+      {/* Main Content */}
+      <div className={selectedPerson ? "w-2/3 pr-4" : "w-full"}>
+        <div className="mb-6 flex justify-between items-center">
         <div className="flex items-center">
           {containerIcons[selectedContainer.type]}
           <h2 className="text-2xl font-bold">{selectedContainer.name}</h2>
@@ -295,7 +303,13 @@ const ContainerDetails: React.FC<ContainerDetailsProps> = ({
           ) : (
             <div className="space-y-3">
               {members.slice(0, 10).map((member) => (
-                <div key={member.id} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50">
+                <div 
+                  key={member.id} 
+                  className={`flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors ${
+                    selectedPerson?.id === member.id ? 'bg-indigo-50 border-indigo-300' : ''
+                  }`}
+                  onClick={() => setSelectedPerson(member)}
+                >
                   <div className="flex items-center space-x-3">
                     <div className="flex-shrink-0">
                       {statusIcons[member.screening_status as keyof typeof statusIcons]}
@@ -345,6 +359,15 @@ const ContainerDetails: React.FC<ContainerDetailsProps> = ({
         listName={selectedContainer.name}
         listType={selectedContainer.type}
       />
+      </div>
+
+      {/* Screening Details Panel */}
+      {selectedPerson && (
+        <ScreeningDetails 
+          person={selectedPerson}
+          onClose={() => setSelectedPerson(null)}
+        />
+      )}
     </div>
   );
 };

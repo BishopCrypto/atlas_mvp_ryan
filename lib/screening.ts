@@ -36,16 +36,21 @@ export class ScreeningService {
   static async screenPerson(
     personId: string,
     tenantId: string,
-    params: ScreeningParams
+    params: ScreeningParams,
+    bypassCache = false
   ): Promise<ScreeningResult> {
     console.log('🔍 Starting screening for:', params.name);
 
-    // 1. Check cache first
-    const cached = await this.checkCache(params);
-    if (cached) {
-      console.log('✅ Using cached screening result');
-      await this.linkCacheToPersonIfNeeded(cached.id, personId);
-      return this.formatCacheResult(cached);
+    // 1. Check cache first (unless bypassed)
+    if (!bypassCache) {
+      const cached = await this.checkCache(params);
+      if (cached) {
+        console.log('✅ Using cached screening result');
+        await this.linkCacheToPersonIfNeeded(cached.id, personId);
+        return this.formatCacheResult(cached);
+      }
+    } else {
+      console.log('⚠️ Bypassing cache for fresh API call');
     }
 
     // 2. Run new screening via Atlas API
@@ -86,8 +91,8 @@ export class ScreeningService {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          username: 'testuser',
-          password: 'testpass123'
+          email: 'ryan11@thedevelopers.dev',
+          password: 'ryan11@thedevelopers.dev'
         })
       });
 
@@ -105,19 +110,10 @@ export class ScreeningService {
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          profiles: [{
-            firstName: params.name.split(' ')[0],
-            lastName: params.name.split(' ').slice(1).join(' '),
-            email: params.email,
-            phone: params.phone,
-            dateOfBirth: params.dateOfBirth,
-            nationality: params.nationality
-          }],
-          options: {
-            confidenceThreshold: 0.7,
-            maxProfilesPerRequest: 1,
-            enableCaching: true
-          }
+          firstName: params.name.split(' ')[0],
+          lastName: params.name.split(' ').slice(1).join(' '),
+          birthday: params.dateOfBirth,
+          checks: ['atlascompass_v3']
         })
       });
 
@@ -148,14 +144,15 @@ export class ScreeningService {
    * Parse Atlas API response into our format
    */
   private static parseAtlasResponse(atlasResponse: any): ScreeningResult {
-    const results = atlasResponse.results?.[0] || {};
-    const matches = results.matches || [];
+    const atlasResult = atlasResponse.results?.atlascompass_v3 || {};
+    const profiles = atlasResult.profiles || [];
     
     let highestConfidence = 0;
     let riskLevel: 'low' | 'medium' | 'high' | 'critical' = 'low';
 
-    if (matches.length > 0) {
-      highestConfidence = Math.max(...matches.map((m: any) => m.confidence || 0));
+    if (profiles.length > 0) {
+      // Convert percentage confidence to decimal for our internal format
+      highestConfidence = Math.max(...profiles.map((p: any) => (p.matchConfidence || 0) / 100));
       
       if (highestConfidence >= 0.9) riskLevel = 'critical';
       else if (highestConfidence >= 0.8) riskLevel = 'high';
@@ -163,11 +160,11 @@ export class ScreeningService {
     }
 
     return {
-      requestId: atlasResponse.requestId || `atlas-${Date.now()}`,
-      matchCount: matches.length,
+      requestId: atlasResult.requestId || `atlas-${Date.now()}`,
+      matchCount: profiles.length,
       highestConfidence,
       riskLevel,
-      matches,
+      matches: profiles,
       cachedAt: new Date().toISOString()
     };
   }

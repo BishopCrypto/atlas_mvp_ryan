@@ -523,3 +523,92 @@ Attempting query: CREATE INDEX IF NOT EXISTS idx_lists_container_id ON lists(con
 Attempting query: CREATE INDEX IF NOT EXISTS idx_lists_tenant_id ON lists(tenant_id)
 Attempting query: CREATE INDEX IF NOT EXISTS idx_lists_type ON lists(type)
 ✅ Lists table setup completed
+ ⚠ ./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+./node_modules/@supabase/realtime-js/dist/module/index.js
+./node_modules/@supabase/supabase-js/dist/module/index.js
+./lib/supabase.ts
+./app/api/setup-lists/route.ts
+ ✓ Compiled /not-found in 169ms (688 modules)
+ ✓ Compiled /api/atlas-proxy/login in 62ms (370 modules)
+🔐 Proxying login request to Atlas API...
+❌ Atlas API login failed: { error: 'Missing email or password' }
+ ✓ Compiled in 128ms (705 modules)
+ ✓ Compiled /login in 123ms (350 modules)
+ ✓ Compiled /not-found in 84ms (693 modules)
+ ✓ Compiled in 283ms (697 modules)
+ ✓ Compiled /not-found in 52ms (688 modules)
+ ✓ Compiled in 148ms (702 modules)
+ ✓ Compiled in 183ms (702 modules)
+ ✓ Compiled in 205ms (697 modules)
+ ✓ Compiled in 99ms (697 modules)
+ ✓ Compiled in 263ms (697 modules)
+ ✓ Compiled in 106ms (697 modules)
+ ✓ Compiled in 142ms (697 modules)
+ ✓ Compiled in 104ms (697 modules)
+ ✓ Compiled in 253ms (683 modules)
+ ✓ Compiled in 60ms (683 modules)
+ ✓ Compiled in 59ms (683 modules)
+ ✓ Compiled in 188ms (683 modules)
+ ✓ Compiled in 438ms (697 modules)
+ ✓ Compiled /api/atlas-proxy/login in 130ms (367 modules)
+🔐 Proxying login request to Atlas API...
+✅ Atlas API login successful
+ ✓ Compiled /api/atlas-proxy/risk-check in 41ms (369 modules)
+🔍 Proxying risk check request to Atlas API...
+✅ Atlas API risk check successful
+ ✓ Compiled in 219ms (352 modules)
+ ✓ Compiled in 186ms (697 modules)
+ ✓ Compiled in 111ms (697 modules)
+ ✓ Compiled in 181ms (697 modules)
+ ⨯ ./components/ContainerDetailsNew.tsx
+Error: 
+  [31mx[0m Unexpected token `div`. Expected jsx identifier
+     ,-[[36;1;4m/Users/ryan/Documents/Claude Projects/atlas_intelligence/components/ContainerDetailsNew.tsx[0m:183:1]
+ [2m183[0m |   };
+ [2m184[0m | 
+ [2m185[0m |   return (
+ [2m186[0m |     <div className="flex h-full">
+     : [31;1m     ^^^[0m
+ [2m187[0m |       {/* Main Content */}
+ [2m188[0m |       <div className={selectedPerson ? "w-2/3 pr-4" : "w-full"}>
+ [2m189[0m |         <div className="mb-6 flex justify-between items-center">
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./components/ContainerDetailsNew.tsx
+./app/page.tsx
+ ⨯ ./components/ContainerDetailsNew.tsx
+Error: 
+  [31mx[0m Unexpected token `div`. Expected jsx identifier
+     ,-[[36;1;4m/Users/ryan/Documents/Claude Projects/atlas_intelligence/components/ContainerDetailsNew.tsx[0m:183:1]
+ [2m183[0m |   };
+ [2m184[0m | 
+ [2m185[0m |   return (
+ [2m186[0m |     <div className="flex h-full">
+     : [31;1m     ^^^[0m
+ [2m187[0m |       {/* Main Content */}
+ [2m188[0m |       <div className={selectedPerson ? "w-2/3 pr-4" : "w-full"}>
+ [2m189[0m |         <div className="mb-6 flex justify-between items-center">
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./components/ContainerDetailsNew.tsx
+./app/page.tsx
+ ✓ Compiled in 278ms (705 modules)
+ ✓ Compiled /not-found in 134ms (696 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 208ms (710 modules)
+ ✓ Compiled in 264ms (710 modules)
+ ✓ Compiled in 317ms (705 modules)
+ ✓ Compiled in 260ms (705 modules)
+ ✓ Compiled /not-found in 161ms (696 modules)
