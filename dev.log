@@ -638,3 +638,21 @@ Import trace for requested module:
  ✓ Compiled in 93ms (717 modules)
  ✓ Compiled in 103ms (717 modules)
  ✓ Compiled in 112ms (717 modules)
+ ✓ Compiled /not-found in 227ms (708 modules)
+ ✓ Compiled /api/atlas-proxy/login in 80ms (380 modules)
+🔐 Proxying login request to Atlas API...
+✅ Atlas API login successful
+ ✓ Compiled /api/atlas-proxy/risk-check in 44ms (382 modules)
+🔍 Proxying risk check request to Atlas API...
+✅ Atlas API risk check successful
+ ✓ Compiled in 173ms (362 modules)
+ ✓ Compiled in 124ms (703 modules)
+ ✓ Compiled in 177ms (703 modules)
+ ✓ Compiled in 80ms (703 modules)
+ ✓ Compiled /api/atlas-proxy/login in 32ms (377 modules)
+🔐 Proxying login request to Atlas API...
+✅ Atlas API login successful
+ ✓ Compiled /api/atlas-proxy/risk-check in 96ms (379 modules)
+🔍 Proxying risk check request to Atlas API...
+✅ Atlas API risk check successful
+ ✓ Compiled in 69ms (727 modules)
